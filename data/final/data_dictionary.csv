@@ -1,0 +1,7 @@
+column,file,type,unit,description
+city,daily_climate.csv,string,,City name from config.yaml
+date,daily_climate.csv,date,,Calendar day (UTC for Open-Meteo; station-local day for NOAA)
+tmax_c,daily_climate.csv,float,°C,Daily maximum temperature (NOAA value/10)
+tmin_c,daily_climate.csv,float,°C,Daily minimum temperature
+prcp_mm,daily_climate.csv,float,mm,Daily precipitation
+source,daily_climate.csv,string,,noaa_ghcn or open_meteo
