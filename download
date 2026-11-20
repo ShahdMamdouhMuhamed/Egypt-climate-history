@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+logs/*.log
+.DS_Store
+# raw data IS committed (needed for offline re-run + hash check); keep files small
