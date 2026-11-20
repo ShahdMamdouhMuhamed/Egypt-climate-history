@@ -1,0 +1,51 @@
+# ---- Team settings (fill in the personal twist from the instructor) ----
+team: "XX"
+contact_email: "CHANGE_ME@example.com"     # used in User-Agent
+personal_twist:
+  description: "CHANGE_ME (e.g. date window / city set given by instructor)"
+date_window: {start: "2000-01-01", end: "2024-12-31"}
+
+paths:
+  raw: data/raw
+  wiki_cache: data/raw/wiki_cache
+  interim: data/interim
+  rejected: data/rejected
+  final: data/final
+  reports: reports
+  figures: reports/figures
+  log_file: logs/pipeline.log
+
+http:
+  timeout_s: 30
+  max_retries: 5
+  backoff_base_s: 2          # waits 2,4,8,16,32 s
+  scrape_delay_s: 1.5        # >= 1 s required
+  user_agent: "DataWranglingCourseBot/1.0 (student project; contact: {email})"
+
+sources:
+  ghcn_stations_url: https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt
+  ghcn_inventory_url: https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt
+  ghcn_station_url: https://www.ncei.noaa.gov/pub/data/ghcn/daily/by_station/{station_id}.csv.gz
+  open_meteo_url: https://archive-api.open-meteo.com/v1/archive
+  wikipedia_base: https://en.wikipedia.org/wiki/
+
+# station_id stays null until Discovery (stage 1) picks one per city.
+cities:
+  - {name: Cairo,      lat: 30.04, lon: 31.24, wiki_page: Cairo,      station_id: null}
+  - {name: Alexandria, lat: 31.20, lon: 29.92, wiki_page: Alexandria, station_id: null}
+  - {name: Aswan,      lat: 24.09, lon: 32.90, wiki_page: Aswan,      station_id: null}
+  - {name: Hurghada,   lat: 27.26, lon: 33.81, wiki_page: Hurghada,   station_id: null}
+
+ghcn:
+  elements: [TMAX, TMIN, PRCP]
+  scale: 10                   # tenths of °C (and tenths of mm) -> units
+  reject_quality_flags: ["D","G","I","K","L","M","N","O","R","S","T","W","X","Z"]  # any non-blank QFLAG is rejected
+
+thresholds:
+  fuzzy_station_match_min: 70      # rapidfuzz score 0-100, below -> manual review
+  max_station_distance_km: 60
+  hot_day_c: 40
+  max_missing_days_per_year: 36    # years above this are flagged
+  temp_min_c: -10
+  temp_max_c: 55
+  max_gap_fill_days: 0             # missing-value policy: never fill
