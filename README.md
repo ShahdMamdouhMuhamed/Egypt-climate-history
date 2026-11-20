@@ -74,7 +74,7 @@ The project follows an end-to-end Data Wrangling pipeline:
 
 8. **Publishing:** Produce the final daily climate datasets, reports, and visualizations.
 
-## 📈 Expected Visualizations
+##  Expected Visualizations
 
 The project will include:
 
